@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_165733) do
+ActiveRecord::Schema.define(version: 2019_11_25_172518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "devises", force: :cascade do |t|
-    t.string "timestamp"
+  create_table "devices", force: :cascade do |t|
+    t.datetime "timestamp"
     t.string "device_id"
     t.string "device_type"
     t.string "status"
