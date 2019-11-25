@@ -1,8 +1,5 @@
 require "csv"
 class Device < ApplicationRecord
-  validates :timestamp,       uniqueness: true
-  validates :device_id,       uniqueness: true
-
   validates :timestamp,       presence: true
   validates :device_id,       presence: true
   validates :device_type,     presence: true
