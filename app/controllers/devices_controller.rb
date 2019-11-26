@@ -14,8 +14,11 @@ class DevicesController < ApplicationController
     return unless params[:device]
 
     @day = device_params[:timestamp]
-    @occurrences = Device.top_occurrences(@day)
+    p @occurrences = Device.top_occurrences(@day)
   end
+
+  # SELECT "devices".* FROM "devices" WHERE "devices"."device_id" IN ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+  # 78
 
   def proces_csv
     if authenticate_user_key
