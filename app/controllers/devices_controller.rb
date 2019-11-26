@@ -1,4 +1,8 @@
 class DevicesController < ApplicationController
+  # Could not do the authentication using normal device
+  # So I made my own method to authenticate still using the
+  # token generator by --> gem 'simple_token_authentication'
+  # In order to make it work I have to disable normal authentication.
   skip_before_action :verify_authenticity_token, only: %i[proces_csv]
 
   # Forces the user to log in and get the key for authenticity
@@ -10,7 +14,8 @@ class DevicesController < ApplicationController
 
   def index
     # I would prefere the use of if over return unless (rubocop)
-    # Also the example doesn't have an empty line after return clause.
+    # Also the example doesn't have an empty line after return clause,
+    # but rubocop forces the empty line.
     return unless params[:device]
 
     @day = device_params[:timestamp]
@@ -27,7 +32,7 @@ class DevicesController < ApplicationController
   end
 
   def device_history
-
+    # Wait until email is responded to know what to do
   end
 
   private
