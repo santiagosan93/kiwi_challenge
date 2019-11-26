@@ -1,4 +1,4 @@
-<h1>Im working</h1>
+<h1>Your security token is "<%= current_user.authentication_token %>"</h1>
 <%= form_with(url: root_path, method: 'get') do %>
   <%= date_field(:device, :timestamp) %>
   <%= submit_tag("Search!") %>
