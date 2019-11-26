@@ -1,17 +1,20 @@
 class DevicesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[proces_csv]
-  # skip_before_action :authenticate_entity_from_token!, only: %i[proces_csv]
-  # skip_before_action :authenticate_user!, only: %i[proces_csv]
+
+  # Forces the user to log in and get the key for authenticity
+  # when uploading a csv file
   before_action :authenticate_user!, only: %i[index]
 
   # method created for testing
   # def new_csv; end
 
   def index
-    if params[:device]
-      @occurrences = Device.top_occurrences(device_params[:timestamp])
-      p @occurrences
-    end
+    # I would prefere the use of if over return unless (rubocop)
+    # Also the example doesn't have an empty line after return clause.
+    return unless params[:device]
+
+    @day = device_params[:timestamp]
+    @occurrences = Device.top_occurrences(@day)
   end
 
   def proces_csv

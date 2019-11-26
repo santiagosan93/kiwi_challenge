@@ -1,5 +1,67 @@
-<h1>Your security token is "<%= current_user.authentication_token %>"</h1>
-<%= form_with(url: root_path, method: 'get') do %>
-  <%= date_field(:device, :timestamp) %>
-  <%= submit_tag("Search!") %>
-<% end %>
+<div class="container">
+  <h1>Your security token is "<%= current_user.authentication_token %>"</h1>
+
+  <form action="/" class="search-form m-3">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <div class="form-group">
+      <label for="device_timestamp">Select day</label>
+      <% if @occurrences %>
+        <input type="date" name="device[timestamp]" id="device_timestamp" class="form-control" value=<%= @day %>>
+      <% else %>
+        <input type="date" name="device[timestamp]" id="device_timestamp" class="form-control">
+      <% end %>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Go!</button>
+  </form>
+
+  <% if @occurrences %>
+    <% if @occurrences.empty? %>
+      <p class="text-info ml-3">No entries this day</p>
+    <% else %>
+      <table class="table m-3">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Device</th>
+            <th scope="col">Type</th>
+            <th scope="col">Ocurrence</th>
+            <th scope="col">Growth</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% counter = 1 %>
+          <% @occurrences.each do |dev_id, occurrence| %>
+            <% device = Device.find_by(device_id: dev_id)  %>
+            <tr>
+              <th scope="row"><%= counter %></th>
+              <td><%= dev_id %></td>
+              <td><%= device.device_type.capitalize %></td>
+              <td><%= occurrence %></td>
+            </tr>
+            <% counter += 1 %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% else %>
+    <p class="text-info ml-3">Please Select a date</p>
+  <% end %>
+</div>
+
+
+
+
+
+
+<!-- Alternative form_with instead of form_for or simple form which are
+going to get deprecated soon.
+Also, decided to write the form manually since I could not find a way to style
+input helpers of form_with without sugesting me to change to form_for or simple
+form. -->
+
+<%#= form_with(url: root_path, method: 'get', class:"bg-primary") do %>
+  <!-- <div class="form-group"> -->
+      <%#= date_field(:device, :timestamp) %>
+      <%#= submit_tag("Search!") %>
+  <!-- </div> -->
+<%# end %>
