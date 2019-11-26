@@ -1,0 +1,24 @@
+<table class="table m-3">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Device</th>
+      <th scope="col">Type</th>
+      <th scope="col">Ocurrence</th>
+      <th scope="col">Growth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% counter = 1 %>
+    <% occurrences.each do |dev_id, occurrence| %>
+      <% device = Device.find_by(device_id: dev_id)  %>
+      <tr>
+        <th scope="row"><%= counter %></th>
+        <td><%= dev_id %></td>
+        <td><%= device.device_type.capitalize %></td>
+        <td><%= occurrence %></td>
+      </tr>
+      <% counter += 1 %>
+    <% end %>
+  </tbody>
+</table>
