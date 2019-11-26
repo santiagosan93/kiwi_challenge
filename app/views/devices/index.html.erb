@@ -1,17 +1,19 @@
 <div class="container">
-  <h3 class="text-secondary">Your security token is "<%= current_user.authentication_token %>"</h3>
+  <h3 class="text-secondary mt-4">Your security token is "<%= current_user.authentication_token %>"</h3>
 
-  <%= render 'devices/index_components/form', day: @day %>
+  <div class="d-flex">
+    <%= render 'devices/index_components/form', day: @day %>
 
-  <% if @occurrences %>
-    <% if @occurrences.empty? %>
-      <p class="text-info ml-3">No entries this day</p>
+    <% if @occurrences %>
+      <% if @occurrences.empty? %>
+        <p class="text-info m-4">No entries this day</p>
+      <% else %>
+        <%= render 'devices/index_components/table', occurrences: @occurrences, day: @day %>
+      <% end %>
     <% else %>
-      <%= render 'devices/index_components/table', occurrences: @occurrences, day: @day %>
+      <p class="text-info my-4 mx-3">Please Select a date</p>
     <% end %>
-  <% else %>
-    <p class="text-info ml-3">Please Select a date</p>
-  <% end %>
+  </div>
 </div>
 
 
