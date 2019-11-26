@@ -13,7 +13,8 @@ class DevicesController < ApplicationController
     # Also the example doesn't have an empty line after return clause.
     return unless params[:device]
 
-    @occurrences = Device.top_occurrences(device_params[:timestamp])
+    @day = device_params[:timestamp]
+    @occurrences = Device.top_occurrences(@day)
   end
 
   def proces_csv
