@@ -19,7 +19,7 @@ class DevicesController < ApplicationController
 
   def proces_csv
     if authenticate_user_key
-      Device.create_records(params["report.csv"])
+      Device.create_records(params[:X_Upload_File])
       render :proces_csv, status: :created
     else
       render :error, status: :unauthorized
