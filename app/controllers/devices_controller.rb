@@ -17,9 +17,6 @@ class DevicesController < ApplicationController
     p @occurrences = Device.top_occurrences(@day)
   end
 
-  # SELECT "devices".* FROM "devices" WHERE "devices"."device_id" IN ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-  # 78
-
   def proces_csv
     if authenticate_user_key
       Device.create_records(params["report.csv"])
@@ -27,6 +24,10 @@ class DevicesController < ApplicationController
     else
       render :error, status: :unauthorized
     end
+  end
+
+  def device_history
+
   end
 
   private
