@@ -1,33 +1,37 @@
-require 'csv'
 class DevicesController < ApplicationController
-  def new_csv; end
+  skip_before_action :verify_authenticity_token, only: %i[proces_csv]
+  # skip_before_action :authenticate_entity_from_token!, only: %i[proces_csv]
+  # skip_before_action :authenticate_user!, only: %i[proces_csv]
+  before_action :authenticate_user!, only: %i[index]
+
+  # method created for testing
+  # def new_csv; end
 
   def index
     if params[:device]
-      p device_params[:timestamp].class
-      @occurrences = Device.where(
-        "timestamp >= ? AND timestamp <= ?",
-        "#{device_params[:timestamp]} 00:00:00",
-        "#{device_params[:timestamp]} 23:59:59"
-      )
+      @occurrences = Device.top_occurrences(device_params[:timestamp])
       p @occurrences.count
     end
   end
 
   def proces_csv
-    csv_options = { col_sep: ',', quote_char: '"', headers: :first_row }
-    csv_file = CSV.new(params[:csv_file].read, csv_options)
-    csv_file.each do |row|
-      Device.create(
-        timestamp: row['timestamp'],
-        device_id: row['id'],
-        device_type: row['type'],
-        status: row['status']
-      )
+    if authenticate_user_key
+      Device.create_records(params["report.csv"])
+      render :proces_csv, status: :created
+    else
+      render :error, status: :unauthorized
     end
   end
 
   private
+
+  def authenticate_user_key
+    user  = User.find_by(email: params[:X_User_Email])
+    token = params[:X_User_Token]
+    return user.authentication_token == token if user
+
+    false
+  end
 
   def device_params
     params.require(:device).permit(:timestamp)
