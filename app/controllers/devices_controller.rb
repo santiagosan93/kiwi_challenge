@@ -10,7 +10,7 @@ class DevicesController < ApplicationController
   def index
     if params[:device]
       @occurrences = Device.top_occurrences(device_params[:timestamp])
-      p @occurrences.count
+      p @occurrences
     end
   end
 
