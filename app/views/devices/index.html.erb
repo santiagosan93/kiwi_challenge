@@ -7,7 +7,7 @@
     <% if @occurrences.empty? %>
       <p class="text-info ml-3">No entries this day</p>
     <% else %>
-      <%= render 'devices/index_components/table', occurrences: @occurrences %>
+      <%= render 'devices/index_components/table', occurrences: @occurrences, day: @day %>
     <% end %>
   <% else %>
     <p class="text-info ml-3">Please Select a date</p>
@@ -19,7 +19,7 @@
 
 
 
-<!-- Alternative form_with instead of form_for or simple form which are
+<!-- Alternatives for form_with are form_for and simple_form which are
 going to get deprecated soon.
 Also, decided to write the form manually since I could not find a way to style
 input helpers of form_with without sugesting me to change to form_for or simple
