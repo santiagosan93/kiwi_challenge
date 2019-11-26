@@ -51,10 +51,10 @@ class Device < ApplicationRecord
           .first(10)
   end
 
-  def calculate_growth(device, ocurrence)
+  def calculate_growth(ocurrence)
     week_seconds = 60 * 60 * 24 * 7
     day = (timestamp - week_seconds).to_s.split(" ")[0]
-    prev_o = Device.occurrences_single_device(day, device.device_id).count
+    prev_o = Device.occurrences_single_device(day, device_id).count
     dif_percentage(ocurrence, prev_o)
   end
 

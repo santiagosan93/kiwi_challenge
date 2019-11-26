@@ -12,7 +12,7 @@
     <% counter = 1 %>
     <% occurrences.each do |dev_id, occurrence| %>
       <% device = Device.occurrences_single_device(day, dev_id)  %>
-      <% prev_week_ocurrances = device.first.calculate_growth(device.first, occurrence)  %>
+      <% prev_week_ocurrances = device.first.calculate_growth(occurrence)  %>
       <tr>
         <th scope="row"><%= counter %></th>
         <td><%= dev_id %></td>
