@@ -19,7 +19,7 @@ class DevicesController < ApplicationController
     return unless params[:device]
 
     @day = device_params[:timestamp]
-    p @occurrences = Device.top_occurrences(@day)
+    @occurrences = Device.top_occurrences(@day)
   end
 
   def proces_csv

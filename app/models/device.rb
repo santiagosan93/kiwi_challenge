@@ -25,16 +25,16 @@ class Device < ApplicationRecord
     end
   end
 
-  def self.occurrences_single_device(day, dev_id)
+  def occurrences_single_device(day)
     Device.where(
       "timestamp >= ? AND timestamp <= ? AND device_id = ?",
       "#{day} 00:00:00",
       "#{day} 23:59:59",
-      dev_id
+      device_id
     )
   end
 
-  def self.top_occurrences(timestamp)
+  def self.top_occurrences(day)
     # This method returns an ARRAY of arrays! array[0][0] => (device_id)
     #                                         array[0][1] => (popularity)
     # I think im doing something wrong calling the
@@ -43,8 +43,8 @@ class Device < ApplicationRecord
     # I iterate over the returned array.
     Device.where(
       "timestamp >= ? AND timestamp <= ?",
-      "#{timestamp} 00:00:00",
-      "#{timestamp} 23:59:59"
+      "#{day} 00:00:00",
+      "#{day} 23:59:59"
     )
           .group(:device_id)
           .count.sort_by { |_key, value| value * -1 }
@@ -54,11 +54,15 @@ class Device < ApplicationRecord
   def calculate_growth(ocurrence)
     week_seconds = 60 * 60 * 24 * 7
     day = (timestamp - week_seconds).to_s.split(" ")[0]
-    prev_o = Device.occurrences_single_device(day, device_id).count
+    prev_o = occurrences_single_device(day).count
     dif_percentage(ocurrence, prev_o)
   end
 
+  private
+
   def dif_percentage(ocurrence, prev_o)
-    "#{((prev_o * 100) / ocurrence)}%"
+    return "No previous record" if prev_o.zero?
+
+    "#{((ocurrence * 100) / prev_o) - 100}%"
   end
 end
