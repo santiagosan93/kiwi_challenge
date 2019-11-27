@@ -16,10 +16,24 @@ class DevicesController < ApplicationController
     # I would prefere the use of if over return unless (rubocop)
     # Also the example doesn't have an empty line after return clause,
     # but rubocop forces the empty line.
+
+    # This method was only two lines before I decided to optimize the querys
+    # Don't know if to go back.
     return unless params[:device]
 
     @day = device_params[:timestamp]
     @occurrences = Device.top_occurrences(@day)
+    @sample_ids = @occurrences.map { |key, _val| key }
+    @prev_occurrances = Device.top_occurrences_with_ids((@day.to_date - 7).to_s, @sample_ids)
+    @missing_pairs = missing_pairs(@occurrences, @prev_occurrances)
+    @prev_occurrances = fill_missing_paris(@prev_occurrances, @missing_pairs)
+    @prev_occurrances = Device.sort_prev_occurrances_to_occurrences(@prev_occurrances, @occurrences)
+    @ordered_devices = Device.popular_devices(@day, @sample_ids)
+    @counted_ordered_devices = @ordered_devices.map.with_index do |(device, _sorter), index|
+      third_element = 0
+      third_element = @prev_occurrances[index][1] if @prev_occurrances[index]
+      [device, @occurrences[index][1], third_element]
+    end
   end
 
   def proces_csv
@@ -36,6 +50,24 @@ class DevicesController < ApplicationController
   end
 
   private
+
+  def fill_missing_paris(prev_occurrances, missing_pairs)
+    prev_occurrances = prev_occurrances
+    missing_pairs.each do |device_id, index|
+      prev_occurrances.insert(index,[device_id, 0])
+    end
+    prev_occurrances
+  end
+
+  def missing_pairs(occ, prev_o)
+    missing_pair = []
+    occ = occ.map { |device_id, _occ| device_id }
+    prev_o = prev_o.map { |device_id, _occ| device_id }
+    occ.each do |device_id|
+      missing_pair << [device_id, occ.index(device_id)] unless prev_o.include?(device_id)
+    end
+    missing_pair
+  end
 
   def authenticate_user_key
     user  = User.find_by(email: params[:X_User_Email])
