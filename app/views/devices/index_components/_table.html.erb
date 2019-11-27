@@ -10,14 +10,24 @@
   </thead>
   <tbody>
     <% counter = 1 %>
-    <% occurrences.each do |dev_id, occurrence| %>
-      <% device = Device.find_by(device_id: dev_id).occurrences_single_device(day)  %>
+    <% sample = occurrences.map{ |key, val| key } %>
+    <% sample_two = Device.something(day, sample).map{ |dev| dev} %>
+    <% sample_three = sample_two.uniq! { |device| device.device_serial_number} %>
+    <!-- I don't understand why the group method is not working -->
+    <%# sample_three = sample_two.group(:device_serial_number) %>
+    <% sample_three = sample_three.map do |device| %>
+      <% [device, sample.find_index(device.device_serial_number)] %>
+    <% end %>
+    <% sorted = sample_three.sort_by {|device,indexx| indexx} %>
+    <% sorted = sorted.map.with_index { |(device, _sorter), index| [device, occurrences[index][1]] } %>
+    <% sorted.each do |device, occurrence| %>
+      <%# device = device.occurrences_single_device(day)  %>
       <tr>
         <th scope="row"><%= counter %></th>
-        <td><%= dev_id %></td>
-        <td><%= device.first.device_type.capitalize %></td>
+        <td><%= device.device_serial_number %></td>
+        <td><%= device.device_type.capitalize %></td>
         <td><%= occurrence %></td>
-        <td><%= device.first.calculate_growth(occurrence)  %></td>
+        <td><%= device.calculate_growth(occurrence)  %></td>
       </tr>
       <% counter += 1 %>
     <% end %>
