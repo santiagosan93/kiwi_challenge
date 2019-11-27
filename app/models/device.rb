@@ -52,6 +52,14 @@ class Device < ApplicationRecord
           .first(10)
   end
 
+  def self.sort_prev_occurrances_to_occurrences(prev_o, occ)
+    occ = occ.map { |device_id, _occurrence| device_id }
+    prev_o = prev_o.map do |device_id, occurrence|
+      [device_id, occurrence, occ.find_index(device_id)]
+    end
+    prev_o.sort_by { |_dev, _occ, index| index }.map { |dev, occr, _index| [dev, occr] }
+  end
+
   def self.top_occurrences_with_ids(day, sample_ids)
     Device.where(
       "timestamp >= ? AND timestamp <= ? AND device_serial_number in (?)",
