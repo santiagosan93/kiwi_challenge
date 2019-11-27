@@ -25,22 +25,14 @@ class Device < ApplicationRecord
     end
   end
 
-  def self.something(day, dev_ids)
-    Device.where(
+  def self.popular_devices(day, sample_ids)
+    device_and_occurrance = Device.where(
       "timestamp >= ? AND timestamp <= ? AND device_serial_number IN (?)",
-      "#{day} 00:00:00",
-      "#{day} 23:59:59",
-      dev_ids
-    )
-  end
-
-  def occurrences_single_device(day)
-    Device.where(
-      "timestamp >= ? AND timestamp <= ? AND device_serial_number = ?",
-      "#{day} 00:00:00",
-      "#{day} 23:59:59",
-      device_serial_number
-    )
+      "#{day} 00:00:00", "#{day} 23:59:59", sample_ids
+    ).map { |dev| dev }.uniq!(&:device_serial_number).map do |device|
+      [device, sample_ids.find_index(device.device_serial_number)]
+    end
+    device_and_occurrance.sort_by { |_device, indexx| indexx }
   end
 
   def self.top_occurrences(day)
@@ -60,17 +52,20 @@ class Device < ApplicationRecord
           .first(10)
   end
 
-  def calculate_growth(ocurrence)
-    week_seconds = 60 * 60 * 24 * 7
-    day = (timestamp - week_seconds).to_s.split(" ")[0]
-    prev_o = occurrences_single_device(day).count
-    dif_percentage(ocurrence, prev_o)
+  def self.top_occurrences_with_ids(day, sample_ids)
+    Device.where(
+      "timestamp >= ? AND timestamp <= ? AND device_serial_number in (?)",
+      "#{day} 00:00:00",
+      "#{day} 23:59:59",
+      sample_ids
+    )
+          .group(:device_serial_number)
+          .count.first(10)
   end
-
-  private
 
   def dif_percentage(ocurrence, prev_o)
     return "No previous record" if prev_o.zero?
+    # raise
 
     "#{((ocurrence * 100) / prev_o) - 100}%"
   end

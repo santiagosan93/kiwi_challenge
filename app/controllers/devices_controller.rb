@@ -20,6 +20,15 @@ class DevicesController < ApplicationController
 
     @day = device_params[:timestamp]
     @occurrences = Device.top_occurrences(@day)
+    @sample_ids = @occurrences.map { |key, _val| key }
+    @prev_occurrances = Device.top_occurrences_with_ids((@day.to_date - 7).to_s, @sample_ids)
+    @ordered_devices = Device.popular_devices(@day, @sample_ids)
+    @counted_ordered_devices = @ordered_devices.map.with_index do |(device, _sorter), index|
+      third_element = 0
+      third_element = @prev_occurrances[index][1] if @prev_occurrances[index]
+      [device, @occurrences[index][1], third_element]
+    end
+    raise
   end
 
   def proces_csv
