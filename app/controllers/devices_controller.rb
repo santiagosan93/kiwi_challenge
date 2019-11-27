@@ -16,6 +16,9 @@ class DevicesController < ApplicationController
     # I would prefere the use of if over return unless (rubocop)
     # Also the example doesn't have an empty line after return clause,
     # but rubocop forces the empty line.
+
+    # This method was only two lines before I decided to optimize the querys
+    # Don't know if to go back.
     return unless params[:device]
 
     @day = device_params[:timestamp]
