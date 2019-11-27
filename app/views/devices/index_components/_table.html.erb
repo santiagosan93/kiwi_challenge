@@ -11,7 +11,7 @@
   <tbody>
     <% counter = 1 %>
     <% occurrences.each do |dev_id, occurrence| %>
-      <% device = Device.occurrences_single_device(day, dev_id)  %>
+      <% device = Device.find_by(device_id: dev_id).occurrences_single_device(day)  %>
       <tr>
         <th scope="row"><%= counter %></th>
         <td><%= dev_id %></td>
