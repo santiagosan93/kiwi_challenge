@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_234927) do
 
   create_table "devices", force: :cascade do |t|
     t.datetime "timestamp"
-    t.string "device_id"
+    t.string "device_serial_number"
     t.string "device_type"
     t.string "status"
     t.datetime "created_at", null: false

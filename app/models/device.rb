@@ -1,12 +1,12 @@
 require "csv"
 class Device < ApplicationRecord
-  validates :timestamp,       presence: true
-  validates :device_id,       presence: true
-  validates :device_type,     presence: true
-  validates :status,          presence: true
+  validates :timestamp,            presence: true
+  validates :device_serial_number, presence: true
+  validates :device_type,          presence: true
+  validates :status,               presence: true
 
-  validates :device_type,     inclusion: { in: %w[gateway sensor] }
-  validates :status,          inclusion: { in: %w[online offline] }
+  validates :device_type,          inclusion: { in: %w[gateway sensor] }
+  validates :status,               inclusion: { in: %w[online offline] }
 
   def self.create_records(file_instance)
     # Since we recieve an ActionDispatch::Http::UploadedFile instance,
@@ -18,24 +18,33 @@ class Device < ApplicationRecord
     csv_file.each do |row|
       Device.create(
         timestamp: row['timestamp'],
-        device_id: row['id'],
+        device_serial_number: row['id'],
         device_type: row['type'],
         status: row['status']
       )
     end
   end
 
-  def occurrences_single_device(day)
+  def self.something(day, dev_ids)
     Device.where(
-      "timestamp >= ? AND timestamp <= ? AND device_id = ?",
+      "timestamp >= ? AND timestamp <= ? AND device_serial_number IN (?)",
       "#{day} 00:00:00",
       "#{day} 23:59:59",
-      device_id
+      dev_ids
+    )
+  end
+
+  def occurrences_single_device(day)
+    Device.where(
+      "timestamp >= ? AND timestamp <= ? AND device_serial_number = ?",
+      "#{day} 00:00:00",
+      "#{day} 23:59:59",
+      device_serial_number
     )
   end
 
   def self.top_occurrences(day)
-    # This method returns an ARRAY of arrays! array[0][0] => (device_id)
+    # This method returns an ARRAY of arrays! array[0][0] => (device_serial_number)
     #                                         array[0][1] => (popularity)
     # I think im doing something wrong calling the
     # .first(10) last in the method chain. I think this, because I don't know
@@ -46,7 +55,7 @@ class Device < ApplicationRecord
       "#{day} 00:00:00",
       "#{day} 23:59:59"
     )
-          .group(:device_id)
+          .group(:device_serial_number)
           .count.sort_by { |_key, value| value * -1 }
           .first(10)
   end
