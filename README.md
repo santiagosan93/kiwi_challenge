@@ -14,11 +14,13 @@ corresponding to those headers
 
 In order for you to upload a CSV file you have reach the following endpoint.
 
-``POST`` /upload
+``POST``  /upload
 --Headers
+
 {Content-Type: application/json}
 
 --Body
+
 {
   X_Upload_File: Your file object,
   X_User_Email: "The mail you signed up with",
