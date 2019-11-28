@@ -17,7 +17,7 @@ class DevicesController < ApplicationController
     # Also the example doesn't have an empty line after return clause,
     # but rubocop forces the empty line.
 
-    # This method was only two lines before I decided to optimize the querys
+    # This method was only TWO LINES!! before I decided to optimize the querys
     # Don't know if to go back.
     return unless params[:device]
 
@@ -46,10 +46,30 @@ class DevicesController < ApplicationController
   end
 
   def device_history
-    # Wait until email is responded to know what to do
+    return unless params[:device]
+
+    counter = 0
+    @device_type = device_params[:device_type]
+    @status = device_params[:status]
+    @date = device_params[:timestamp]
+    @devices = Device.get_device_and_status(@device_type, @status, @date)
+    @splited_devices = []
+    30.times do
+      @splited_devices << group_by_day(@devices, @date.to_date + counter)
+      counter -= 1
+    end
   end
 
   private
+
+  def group_by_day(devices, date)
+    devices = devices.select do |device|
+      device.timestamp > date && device.timestamp < (date + 1)
+    end
+    return [0, date] if devices.empty?
+
+    [devices.uniq!(&:device_serial_number).count, date]
+  end
 
   def fill_missing_paris(prev_occurrances, missing_pairs)
     prev_occurrances = prev_occurrances
@@ -78,6 +98,6 @@ class DevicesController < ApplicationController
   end
 
   def device_params
-    params.require(:device).permit(:timestamp)
+    params.require(:device).permit(:timestamp, :device_type, :status)
   end
 end

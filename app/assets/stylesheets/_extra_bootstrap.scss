@@ -1,3 +1,15 @@
 .b-shadow {
   box-shadow: 0 0 2.1px #646464;
 }
+
+.absolute-0-0 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.relative {
+  position: relative;
+}

@@ -2,7 +2,13 @@
   <h3 class="text-secondary mt-4">Your security token is "<%= current_user.authentication_token %>"</h3>
 
   <div class="d-flex">
-    <%= render 'devices/index_components/form', day: @day %>
+    <div class="left-screen">
+      <%= render 'devices/index_components/form', day: @day %>
+      <div class="relative">
+        <%= link_to "", device_history_path, class:"absolute-0-0" %>
+        <button class="btn btn-secondary m-4">Devise history!</button>
+      </div>
+    </div>
 
     <% if @occurrences %>
       <% if @occurrences.empty? %>

@@ -1,0 +1,24 @@
+<form action="/device_history" class="search-form m-4">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <div class="form-group mb-2">
+    <% if @splited_devices %>
+        <input type="date" name="device[timestamp]" id="device_timestamp" class="form-control" value=<%= date %>>
+      <% else %>
+        <input type="date" name="device[timestamp]" id="device_timestamp" class="form-control">
+      <% end %>
+    <label for="device_typee">Select type</label>
+    <select name="device[device_type]" id="device_typee" class="form-control">
+      <option value="gateway" selected>Gateway</option>
+      <option value="sensor">Sensor</option>
+    </select>
+  </div>
+  <div class="form-group mb-2">
+    <label for="device_statuss">Select status</label>
+    <select name="device[status]" id="device_statuss" class="form-control">
+      <option value="online"></option>
+      <option value="online" selected>Online</option>
+      <option value="offline">Offline</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Go!</button>
+</form>
