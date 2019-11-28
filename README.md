@@ -45,7 +45,7 @@ of devices of the type and status specified were active.
 
 -----------
 
-This app was coded in RoR Trying to make the least ammount of querys as possible.
+This app was coded in RoR Trying to make the least ammount of Database querys as possible.
 
 It has one model: Devices
 
