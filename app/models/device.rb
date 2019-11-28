@@ -77,4 +77,15 @@ class Device < ApplicationRecord
 
     "#{((ocurrence * 100) / prev_o) - 100}%"
   end
+
+  def self.get_device_and_status(type, status, day)
+    before30 = (day.to_date - 30).to_s
+    Device.where(
+      "timestamp >= ? AND timestamp <= ? AND device_type = ? AND status = ?",
+      "#{before30} 00:00:00",
+      "#{day} 23:59:59",
+      type,
+      status
+    ).order(timestamp: :desc)
+  end
 end
