@@ -47,7 +47,7 @@ of devices of the type and status specified were active.
 
 This app was coded in RoR Trying to make the least ammount of Database querys as possible.
 
-It has one model: Devices
+It has one model: Device
 
 the instance variables you'll get to see are the following.
 id, device_serial_number, device_type, device_status
