@@ -26,12 +26,12 @@ In order for you to upload a CSV file you have reach the following endpoint.
 
 {
 
-  X_Upload_File: Your file object,
-  
-  X_User_Email: "The mail you signed up with",
-  
-  X_User_Token: "The token assigned yo your account once you register"
-  
+    X_Upload_File: Your file object,
+
+    X_User_Email: "The mail you signed up with",
+
+    X_User_Token: "The token assigned yo your account once you register"
+
 }
 
 If you still havn't registered, you can go to '/' and click on sign-up.
