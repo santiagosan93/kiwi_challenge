@@ -1,0 +1,7 @@
+<nav class="navbar navbar-light bg-info sticky-top">
+  <div class="nav-lef d-flex">
+    <%= link_to "Home", root_path, class:"mx-3 flex-center text-white decoration-none" %>
+    <span class="navbar-brand mb-0 h1 text-white mx-3"><%= current_user.email %></span>
+  </div>
+  <span style="font-size: 17px" class="navbar-brand mb-0 h1 text-white">Key: <%= current_user.authentication_token %></span>
+</nav>

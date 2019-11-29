@@ -1,9 +1,7 @@
+<%= render 'shared/navbar' %>
 <div class="container">
-  <h3 class="text-secondary mt-4">Your security token is "<%= current_user.authentication_token %>"</h3>
-
-
   <div class="d-flex">
-    <div class="left-screen">
+    <div class="left-screen sticky-t-56">
       <%= render 'devices/index_components/form', day: @day %>
       <div class="relative">
         <%= link_to "", device_history_path, class:"absolute-0-0" %>
@@ -18,7 +16,7 @@
         <%= render 'devices/index_components/table', devices: @devices, day:@day %>
       <% end %>
     <% else %>
-      <p class="text-info my-4 mx-3">Please Select a date</p>
+      <p class="text-info my-4 mx-3">Please select a date</p>
     <% end %>
   </div>
 </div>
