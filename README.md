@@ -4,7 +4,7 @@
 Before you start reading!
 ---
 
-This challenge has two ways to solve the solution. The first one focuses at all cost to not query the database.
+This challenge has two ways it was solved. The first one focuses at all cost to not query the database.
 The second one doesn't take this parameter into concideration.
 
 
