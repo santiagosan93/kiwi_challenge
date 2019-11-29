@@ -1,4 +1,17 @@
 # README
+---
+Set up
+---
+
+Go in your terminal to the root folder of this app and run the following commands on your terminal
+
+    bundle install
+    yarn install
+    rails s
+
+This commands will fetch all required gems and packages required to run the app, and the las one, (rails s), will start a local server on the port 3000 where you can use the app.
+
+---------
 
 This is a tool prepared to recieve uploaded CSV files with the following structure
 
