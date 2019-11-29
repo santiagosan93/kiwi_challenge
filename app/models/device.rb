@@ -10,7 +10,7 @@ class Device < ApplicationRecord
 
   scope :in_day, ->(day) { where("timestamp >= ? AND timestamp <= ?", "#{day} 00:00:00", "#{day} 23:59:59") }
   scope :type_and_status, ->(type, status) { where("device_type = ? AND status = ?", type, status) }
-  scope :match_serial, ->(serial = :device_serial_number) { where("device_serial_number = ?", serial) }
+  scope :match_serial, ->(serial) { where("device_serial_number = ?", serial) }
 
   def self.get_devices(day)
     Device.in_day(day).group(:device_serial_number)
@@ -40,7 +40,7 @@ class Device < ApplicationRecord
 
   def find_percentage(day, occurrence)
     day = (day.to_date - 7).to_s
-    prev_occurrence = Device.in_day(day).match_serial.count
+    prev_occurrence = Device.in_day(day).match_serial(device_serial_number).count
     calculate_percentage(prev_occurrence, occurrence)
   end
 
