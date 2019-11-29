@@ -52,6 +52,7 @@ class DevicesController < ApplicationController
     @device_type = device_params[:device_type]
     @status = device_params[:status]
     @date = device_params[:timestamp]
+    return if @date = ""
     @devices = Device.get_device_and_status(@device_type, @status, @date)
     @splited_devices = []
     30.times do
