@@ -1,0 +1,16 @@
+<table class="table m-3 table-hover">
+  <thead class="thead-dark">
+    <tr class="sticky-top">
+      <th scope="col">Day</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <% splited_devices.each do |spl_dev| %>
+    <tbody>
+      <tr>
+        <td><%= spl_dev[1].strftime('%A, %b %d') %></td>
+        <td><%= spl_dev[0] %></td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

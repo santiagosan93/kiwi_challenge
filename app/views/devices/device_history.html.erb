@@ -1,27 +1,20 @@
 
 
 <div class="container">
-  <%= render 'devices/device_history_components/form', date: @date %>
-  <% if @splited_devices %>
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Day</th>
-          <th scope="col">Count</th>
-        </tr>
-      </thead>
-    <% @splited_devices.each do |spl_dev| %>
-        <tbody>
-          <tr>
-            <td><%= spl_dev[1].strftime('%A, %b %d') %></td>
-            <td><%= spl_dev[0] %></td>
-          </tr>
-        </tbody>
-      <% end %>
-    </table>
-  <% else %>
-    <p class="text-info my-4 mx-3">Please Select a date</p>
-  <% end %>
+  <div class="d-flex">
+    <div class="left-screen sticky-top">
+      <%= render 'devices/device_history_components/form', date: @date %>
+      <div class="relative">
+        <%= link_to "", root_path, class:"absolute-0-0" %>
+        <button class="btn btn-secondary m-4">Back to home</button>
+      </div>
+    </div>
+    <% if @splited_devices %>
+      <%= render 'devices/device_history_components/table', splited_devices: @splited_devices %>
+    <% else %>
+      <p class="text-info my-4 mx-3">Please Select a date</p>
+    <% end %>
+  </div>
 </div>
 
 
