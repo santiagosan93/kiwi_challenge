@@ -8,24 +8,21 @@ class Device < ApplicationRecord
   validates :device_type,          inclusion: { in: %w[gateway sensor] }
   validates :status,               inclusion: { in: %w[online offline] }
 
+  scope :in_day, ->(day) { where("timestamp >= ? AND timestamp <= ?", "#{day} 00:00:00", "#{day} 23:59:59") }
+  scope :type_and_status, ->(type, status) { where("device_type = ? AND status = ?", type, status) }
+  scope :match_serial, ->(serial = :device_serial_number) { where("device_serial_number = ?", serial) }
+
   def self.get_devices(day)
-    Device.where("timestamp >= ? AND timestamp <= ?","#{day} 00:00:00","#{day} 23:59:59")
-          .group(:device_serial_number)
+    Device.in_day(day).group(:device_serial_number)
           .count.sort_by { |_key, value| value * -1 }
           .first(10)
   end
 
   def self.get_types(day, type, status)
-    amount = Device.where(
-      "timestamp >= ? AND timestamp <= ? AND device_type = ? AND status = ?",
-      "#{day} 00:00:00",
-      "#{day} 23:59:59",
-      type,
-      status
-    )
+    devices = Device.in_day(day).type_and_status(type, status)
     return 0 if amount.empty?
 
-    amount.map { |device| device }.uniq!(&:device_serial_number).count
+    devices.map { |device| device }.uniq!(&:device_serial_number).count
   end
 
   def self.create_records(file)
@@ -43,12 +40,7 @@ class Device < ApplicationRecord
 
   def find_percentage(day, occurrence)
     day = (day.to_date - 7).to_s
-    prev_occurrence = Device.where(
-      "timestamp >= ? AND timestamp <= ? AND device_serial_number = ?",
-      "#{day} 00:00:00",
-      "#{day} 23:59:59",
-      device_serial_number
-    ).count
+    prev_occurrence = Device.in_day(day).match_serial.count
     calculate_percentage(prev_occurrence, occurrence)
   end
 
