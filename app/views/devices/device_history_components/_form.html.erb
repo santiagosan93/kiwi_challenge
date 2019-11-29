@@ -1,8 +1,8 @@
 <form action="/device_history" class="search-form form-2 m-4">
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="form-group mb-2">
-    <% if @splited_devices %>
-        <input type="date" name="device[timestamp]" id="device_timestamp" class="form-control" value=<%= date %>>
+    <% if all_days %>
+        <input type="date" name="device[timestamp]" id="device_timestamp" class="form-control" value=<%= day %>>
       <% else %>
         <input type="date" name="device[timestamp]" id="device_timestamp" class="form-control">
       <% end %>

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="d-flex">
     <div class="left-screen sticky-top">
-      <%= render 'devices/device_history_components/form', date: @date %>
+      <%= render 'devices/device_history_components/form', day: @day, all_days: @all_days %>
       <div class="relative">
         <%= link_to "", root_path, class:"absolute-0-0" %>
         <button class="btn btn-secondary m-4">Back to home</button>
@@ -9,8 +9,8 @@
     </div>
     <% if params[:device].nil? %>
       <p class="text-info my-4 mx-3">Please select a date</p>
-    <% elsif @splited_devices %>
-      <%= render 'devices/device_history_components/table', splited_devices: @splited_devices %>
+    <% elsif @all_days %>
+      <%= render 'devices/device_history_components/table', all_days: @all_days %>
     <% else %>
       <p class="text-danger my-4 mx-3">Date is not valid</p>
     <% end %>

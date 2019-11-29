@@ -10,13 +10,14 @@
   </thead>
   <tbody>
     <% counter = 1 %>
-    <% counted_ordered_devices.each do |device, occurrence, prev_o| %>
+    <% devices.each do |device, occurrence| %>
+      <% device = Device.find_by(device_serial_number: device) %>
       <tr>
         <th scope="row"><%= counter %></th>
         <td><%= device.device_serial_number %></td>
         <td><%= device.device_type.capitalize %></td>
         <td><%= occurrence %></td>
-        <td><%= device.dif_percentage(occurrence, prev_o) %></td>
+        <td><%= device.find_percentage(day, occurrence) %></td>
       </tr>
       <% counter += 1 %>
     <% end %>
