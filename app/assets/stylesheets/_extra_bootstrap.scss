@@ -13,3 +13,19 @@
 .relative {
   position: relative;
 }
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.decoration-none:hover {
+  text-decoration: none;
+}
+
+.sticky-t-56 {
+  position: sticky;
+  top: 56px;
+  z-index: 1020;
+}
