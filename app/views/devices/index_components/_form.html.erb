@@ -3,9 +3,9 @@
     <div class="form-group">
       <label for="device_timestamp">Select day</label>
       <% if @devices %>
-        <input required type="date" name="device[timestamp]" id="device_timestamp" class="form-control" value=<%= day %>>
+        <input required type="date" name="device[timestamp]" id="device_timestamp" class="form-control flatpickr" value=<%= day %>>
       <% else %>
-        <input required type="date" name="device[timestamp]" id="device_timestamp" class="form-control">
+        <input required type="date" name="device[timestamp]" id="device_timestamp" class="form-control flatpickr">
       <% end %>
     </div>
     <button type="submit" class="btn btn-primary btn-lg btn-block">Go!</button>
