@@ -20,7 +20,7 @@ class Device < ApplicationRecord
 
   def self.get_types(day, type, status)
     devices = Device.in_day(day).type_and_status(type, status)
-    return 0 if amount.empty?
+    return 0 if devices.empty?
 
     devices.map { |device| device }.uniq!(&:device_serial_number).count
   end
