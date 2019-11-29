@@ -2,12 +2,10 @@
 
 Hi there!
 
-This is a tool prepared to recieve CSV files with the following structure
+This is a tool prepared to recieve uploaded CSV files with the following structure
 
 timestamp,id,type,status
-
 2009-12-01T06:59:22Z,1q2w3e4r,sensor,online
-
 2009-12-01T06:59:22Z,1q2w3e4r,gateway,offline
 
 the first columns as you can see are the headers and the rest is information
