@@ -1,13 +1,5 @@
 # README
 
----
-Before you start reading!
----
-
-This challenge has two ways it was solved. The first one focuses at all cost to not query the database.
-The second one doesn't take this parameter into concideration.
-
-
 This is a tool prepared to recieve uploaded CSV files with the following structure
 
 timestamp,id,type,status
