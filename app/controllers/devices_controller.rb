@@ -15,7 +15,7 @@ class DevicesController < ApplicationController
     @day = device_params[:timestamp]
     @type = device_params[:device_type]
     @status = device_params[:status]
-    @all_days = get_all_days([], @day, @status)
+    @all_days = get_all_days([], @day, @status, @type)
   end
 
   def proces_csv
@@ -29,11 +29,11 @@ class DevicesController < ApplicationController
 
   private
 
-  def get_all_days(all_days, day, status)
+  def get_all_days(all_days, day, status, type)
     all_days = all_days
     counter = 0
     30.times do
-      @device_count = Device.get_types((day.to_date + counter).to_s, @type, status)
+      @device_count = Device.get_types((day.to_date + counter).to_s, type, status)
       all_days << [@device_count, (day.to_date + counter).to_s]
       counter -= 1
     end

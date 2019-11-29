@@ -11,10 +11,10 @@
 
   <body>
     <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
+      <p class="alert alert-success fixed-bot"><%= notice %></p>
     <% end %>
     <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
+      <p class="alert alert-danger fixed-bot"><%= alert %></p>
     <% end %>
     <%= yield %>
     <%= javascript_pack_tag 'application' %>
