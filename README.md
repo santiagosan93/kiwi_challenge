@@ -4,9 +4,9 @@ Hi there!
 
 This is a tool prepared to recieve uploaded CSV files with the following structure
 
-timestamp,id,type,status
-2009-12-01T06:59:22Z,1q2w3e4r,sensor,online
-2009-12-01T06:59:22Z,1q2w3e4r,gateway,offline
+timestamp,id,type,status \n
+2009-12-01T06:59:22Z,1q2w3e4r,sensor,online \n
+2009-12-01T06:59:22Z,1q2w3e4r,gateway,offline \n
 
 the first columns as you can see are the headers and the rest is information
 corresponding to those headers
