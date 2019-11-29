@@ -5,11 +5,11 @@
       <th scope="col">Count</th>
     </tr>
   </thead>
-  <% splited_devices.each do |spl_dev| %>
+  <% all_days.each do |count, date| %>
     <tbody>
       <tr>
-        <td><%= spl_dev[1].strftime('%A, %b %d') %></td>
-        <td><%= spl_dev[0] %></td>
+        <td><%= date.to_date.strftime('%A, %b %d') %></td>
+        <td><%= count %></td>
       </tr>
     </tbody>
   <% end %>
