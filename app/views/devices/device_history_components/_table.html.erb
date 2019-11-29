@@ -8,7 +8,8 @@
   <% all_days.each do |count, date| %>
     <tbody>
       <tr>
-        <td><%= date.to_date.strftime('%A, %b %d') %></td>
+        <!-- Puts date before day -->
+        <td><%= date.to_date.strftime('%b %d, %A') %></td>
         <td><%= count %></td>
       </tr>
     </tbody>
