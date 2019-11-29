@@ -28,6 +28,19 @@ class Device < ApplicationRecord
     amount.map { |device| device }.uniq!(&:device_serial_number).count
   end
 
+  def self.create_records(file)
+    csv_options = { col_sep: ',', quote_char: '"', headers: :first_row }
+    csv_file = CSV.new(file.read, csv_options)
+    csv_file.each do |row|
+      Device.create(
+        timestamp: row['timestamp'],
+        device_serial_number: row['id'],
+        device_type: row['type'],
+        status: row['status']
+      )
+    end
+  end
+
   def find_percentage(day, occurrence)
     day = (day.to_date - 7).to_s
     prev_occurrence = Device.where(
