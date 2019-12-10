@@ -27,7 +27,7 @@ class Device < ApplicationRecord
 
   def self.create_records(file)
     csv_options = { col_sep: ',', quote_char: '"', headers: :first_row }
-    csv_file = CSV.new(file.read, csv_options)
+    csv_file = CSV.parse(file.read, csv_options)
     csv_file.each do |row|
       Device.create(
         timestamp: row['timestamp'],
