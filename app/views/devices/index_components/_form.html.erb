@@ -1,6 +1,6 @@
 <form action="/" class="search-form m-4">
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <div class="form-group">
+    <div class="form-group" id="start">
       <label for="device_timestamp">Select day</label>
       <% if @devices %>
         <input required type="date" name="device[timestamp]" id="device_timestamp" class="form-control flatpickr" value=<%= day %>>
@@ -8,5 +8,5 @@
         <input required type="date" name="device[timestamp]" id="device_timestamp" class="form-control flatpickr">
       <% end %>
     </div>
-    <button type="submit" class="btn btn-primary btn-lg btn-block">Go!</button>
+    <button type="submit" id="end" class="btn btn-primary btn-lg btn-block">Go!</button>
   </form>

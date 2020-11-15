@@ -22,3 +22,11 @@ const input = document.querySelector('.flatpickr')
 console.log(input)
 flatpickr(input)
 
+let LeaderLine = require('LeaderLine');
+
+new LeaderLine(
+  document.getElementById('start'),
+  document.getElementById('end')
+);
+
+module.exports = LeaderLine;
